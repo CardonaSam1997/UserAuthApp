@@ -1,0 +1,22 @@
+--1. Crear la base de datos
+CREATE DATABASE UserAuthDb;
+GO
+
+--2. Usar la base de datos
+USE UserAuthDb;
+GO
+
+--3. Crear la tabla Users
+CREATE TABLE Users (
+    Id UNIQUEIDENTIFIER NOT NULL 
+        CONSTRAINT PK_Users PRIMARY KEY DEFAULT NEWID(),
+    Email NVARCHAR(256) NOT NULL UNIQUE,
+    PasswordHash VARBINARY(MAX) NOT NULL,
+    PasswordSalt VARBINARY(MAX) NOT NULL,
+    Name NVARCHAR(150) NOT NULL,
+    Role NVARCHAR(20) NOT NULL DEFAULT 'user',
+    IsActive BIT NOT NULL DEFAULT 1,
+    CreatedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
+    UpdatedAt DATETIME2 NULL
+);
+GO
