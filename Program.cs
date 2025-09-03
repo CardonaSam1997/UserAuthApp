@@ -1,7 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using UserAuthenticationApi.Models;
+using UserAuthenticationApi.Repository.Impl;
+using UserAuthenticationApi.Repository;
+using UserAuthenticationApi.Repository.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 // ?? Configurar DbContext con la cadena de conexión del appsettings.json
 builder.Services.AddDbContext<UserAuthDbContext>(options =>
