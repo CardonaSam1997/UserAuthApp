@@ -20,6 +20,9 @@ namespace UserAuthenticationApi.Service.Impl
             _config = config;
         }
 
+        public async Task<IEnumerable<User>> GetAllUsersAsync() =>
+            await _userRepository.GetAllUsersAsync();
+
         public async Task<string> AuthenticateAsync(string email, string password)
         {
             var user = await _userRepository.GetByEmailAsync(email);
