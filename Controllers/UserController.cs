@@ -8,7 +8,7 @@ using UserAuthenticationApi.Service;
 
 namespace UserAuthenticationApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     [Authorize]
     public class UserController : ControllerBase
@@ -20,14 +20,26 @@ namespace UserAuthenticationApi.Controllers
             _userService = userService;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            var user = await _userService.FindUserByIdAsync(id);
+            if (user == null)
+                return NotFound(new { error = "Usuario no encontrado." });
+
+            return Ok(user);
+        }
+
+    //• GET /api/users?search=&page=&size= (admin)
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
             return Ok(users);
         }
 
-        // PUT: api/users/{id}
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(Guid id, [FromBody] User user)
         {
@@ -45,7 +57,7 @@ namespace UserAuthenticationApi.Controllers
             }
         }
 
-        // DELETE: api/users/{id}
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {

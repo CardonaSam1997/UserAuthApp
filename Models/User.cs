@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace UserAuthenticationApi.Models;
 
 public partial class User
