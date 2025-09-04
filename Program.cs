@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using UserAuthenticationApi.Models;
 using UserAuthenticationApi.Repository.Impl;
@@ -12,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-// ?? Configurar DbContext con la cadena de conexión del appsettings.json
+// ?? Configurar DbContext con la cadena de conexiï¿½n del appsettings.json
 builder.Services.AddDbContext<UserAuthDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -51,7 +52,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthorization();
+
+app.UseAuthentication(); 
+app.UseAuthorization();  
+
 app.MapControllers();
 
 app.Run();
