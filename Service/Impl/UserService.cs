@@ -5,6 +5,7 @@ using System.Text;
 using UserAuthenticationApi.Models;
 using UserAuthenticationApi.Repository;
 using UserAuthenticationApi.Exceptions;
+using UserAuthenticationApi.DTO;
 
 namespace UserAuthenticationApi.Service.Impl
 {
@@ -20,29 +21,44 @@ namespace UserAuthenticationApi.Service.Impl
             _config = config;
         }
 
+        public async Task<User?> FindUserByIdAsync(Guid id)
+        {
+            var user = await _userRepository.FindUserByIdAsync(id);      
+            if (user == null) throw new InvalidOperationException("Usuario no encontrado.");
+            return user;
+        }
+
         public async Task<IEnumerable<User>> GetAllUsersAsync() =>
             await _userRepository.GetAllUsersAsync();
 
         public async Task<string> AuthenticateAsync(string email, string password)
         {
             var user = await _userRepository.GetByEmailAsync(email);
-            if (user == null) throw new AppException("Invalid credentials");
+            if (user == null) throw new AppException("Credenciales invalidas");
 
             // Aquí deberías validar el password con hash + salt
-            if (password != "1234") throw new AppException("Invalid credentials");
+            if (password != "1234") throw new AppException("Credenciales invalidas");
 
             return GenerateJwtToken(user);
         }       
 
-        public async Task<User> RegisterUserAsync(User user)
+        public async Task<User> RegisterUserAsync(UserDto userDto)
         {
-            var existing = await _userRepository.GetByEmailAsync(user.Email);
+            var existing = await _userRepository.GetByEmailAsync(userDto.Email);
             if (existing != null)
                 throw new InvalidOperationException("El correo ya está registrado.");
 
-            user.Id = Guid.NewGuid();
-            user.CreatedAt = DateTime.UtcNow;
-            user.IsActive = true;
+            using var hmac = new System.Security.Cryptography.HMACSHA512();
+            var user = new User{
+                Id = Guid.NewGuid(),
+                Email = userDto.Email,
+                Name = userDto.Name,
+                Role = userDto.Role,
+                PasswordSalt = hmac.Key,
+                PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(userDto.Password)),
+                IsActive = true,
+                CreatedAt = DateTime.UtcNow
+            };
 
             return await _userRepository.AddUserAsync(user);
         }

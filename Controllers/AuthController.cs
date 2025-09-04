@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using UserAuthenticationApi.Exceptions;
 using UserAuthenticationApi.Models;
 using UserAuthenticationApi.Service;
-
+using UserAuthenticationApi.DTO;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace UserAuthenticationApi.Controllers
@@ -38,11 +38,11 @@ namespace UserAuthenticationApi.Controllers
         // 👉 Registro de usuario
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] User user)
+        public async Task<IActionResult> Register([FromBody] UserDto userDto)
         {
             try
             {
-                var created = await _userService.RegisterUserAsync(user);
+                var created = await _userService.RegisterUserAsync(userDto);
                 return CreatedAtAction(nameof(Register), new { id = created.Id }, created);
             }
             catch (Exception ex)
