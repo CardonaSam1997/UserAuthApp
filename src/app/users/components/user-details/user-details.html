@@ -1,0 +1,41 @@
+<div class="form-container">
+  <div class="header-actions">
+    <h2>Detalles del Usuario</h2>
+    <button 
+      class="edit-btn" 
+      [routerLink]="['/users', user?.id, 'edit']">
+      Editar
+    </button>
+  </div>
+
+  <div class="details-grid">
+    <div>
+      <label>Nombre:</label>
+      <p>{{ user?.nombre }}</p>
+    </div>
+
+    <div>
+      <label>Correo:</label>
+      <p>{{ user?.correo }}</p>
+    </div>
+
+    <div>
+      <label>Rol:</label>
+      <p>{{ user?.rol }}</p>
+    </div>
+
+    <div>
+      <label>Estado:</label>
+      <p>{{ user?.estado ? 'Activo' : 'Inactivo' }}</p>
+    </div>
+
+    <div>
+      <label>Fecha de creación:</label>
+      <p>{{ user?.fechaCreacion | date:'dd/MM/yyyy' }}</p>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="cancel" routerLink="/users">Volver</button>
+  </div>
+</div>

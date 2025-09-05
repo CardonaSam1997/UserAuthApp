@@ -1,0 +1,92 @@
+.form-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+
+  div {
+    label {
+      font-weight: 600;
+      color: #667eea;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    p {
+      background: #f9fafb;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #e1e5e9;
+      color: #333;
+    }
+  }
+}
+
+.form-actions {
+  margin-top: 20px;
+  text-align: center;
+
+  .cancel {
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: #667eea;
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #5a67d8;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.edit-btn {
+  background: #667eea;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: #5a67d8;
+  }
+}

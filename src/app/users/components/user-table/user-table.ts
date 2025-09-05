@@ -22,7 +22,7 @@ export class UserTable {
   ];
 
   viewDetailsUser(user: any) {
-    alert("detalles del usuario");
+    this.router.navigate([`/users/profile`]);
   }
 
 

@@ -4,6 +4,7 @@ import { authGuard } from './guards/auth-guard';
 import { DashboardComponent } from './components/dashboard/dashboard';
 import { UserTable } from './users/components/user-table/user-table';
 import { UserCreate } from './users/components/user-create/user-create';
+import { UserDetails } from './users/components/user-details/user-details';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -15,7 +16,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: '', component: UserTable },
-      { path: 'new', component: UserCreate }
+      { path: 'new', component: UserCreate },
+      { path: 'profile', component: UserDetails },
     ]
 
   },
