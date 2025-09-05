@@ -1,8 +1,18 @@
 <div class="table-container">
-  
+   <!-- Campo de búsqueda -->
   <div class="table-actions">
-    <a class="create-btn" [routerLink]="['/users/new']">Crear Usuario</a>
+  <!-- Búsqueda -->
+  <div class="search-box">
+    <input type="text" placeholder="Buscar usuario..." [(ngModel)]="searchTerm" />
+    <button (click)="onSearch()">Buscar</button>
   </div>
+
+  <!-- Crear usuario -->
+  <a class="create-btn" [routerLink]="['/users/new']">Crear Usuario</a>
+</div>
+
+  
+  
 
   <table>
     <thead>
@@ -26,4 +36,10 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="pagination">
+    <button (click)="changePage(page - 1)" [disabled]="page === 1">Anterior</button>
+    <span>Página {{ page }}</span>
+    <button (click)="changePage(page + 1)" [disabled]="users.length < size">Siguiente</button>
+  </div>
 </div>

@@ -114,9 +114,48 @@ table {
 }
 
 .table-actions {
-  display: flex;  
+  display: flex;
+  justify-content: space-between; /* izquierda ↔ derecha */
+  align-items: center;
   margin-bottom: 10px;
 
+  /* Contenedor de búsqueda */
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    input[type="text"] {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+      &:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 4px rgba(102, 126, 234, 0.5);
+      }
+    }
+
+    button {
+      background-color: #667eea;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: #5a67d8;
+      }
+    }
+  }
+
+  /* Botón crear usuario */
   .create-btn {
     background-color: #667eea;
     color: white;
@@ -132,4 +171,39 @@ table {
       background-color: #5a67d8;
     }
   }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.pagination button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+}
+
+.pagination button:disabled {
+  background: #e2e8f0;
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-weight: 500;
+  color: #333;
 }

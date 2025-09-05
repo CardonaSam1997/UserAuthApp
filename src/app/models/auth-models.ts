@@ -6,6 +6,14 @@ export interface User {
   password?: String
 }
 
+export interface PagedResult<T> {
+  items: T[];
+  totalItems: number;
+  page: number;
+  size: number;
+  total: number;
+}
+
 export interface LoginRequest {
   email: string;
   password: string;
