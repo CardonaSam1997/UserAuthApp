@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { authGuard } from './guards/auth-guard';
 import { DashboardComponent } from './components/dashboard/dashboard';
 import { UserTable } from './users/components/user-table/user-table';
+import { UserCreate } from './users/components/user-create/user-create';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -14,6 +15,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: '', component: UserTable },
+      { path: 'new', component: UserCreate }
     ]
 
   },

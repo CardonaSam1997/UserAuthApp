@@ -1,0 +1,107 @@
+.form-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-weight: 600;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    div {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+        color: #555;
+      }
+
+      input,
+      select {
+        padding: 0.7rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border 0.2s ease-in-out;
+
+        &:focus {
+          border-color: #007bff;
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+        }
+      }
+
+      p {
+        color: #e74c3c;
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* 🔹 espacio entre botones */
+    margin-top: 1.5rem;
+
+    button {
+      flex: 1;
+      padding: 0.9rem 1.2rem; /* 🔹 botones más grandes */
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem; /* 🔹 tamaño de letra un poco mayor */
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.cancel {
+        background: #f0f0f0;
+        color: #333;
+
+        &:hover {
+          background: #e0e0e0;
+        }
+      }
+
+      &.submit {
+        background: #007bff;
+        color: white;
+
+        &:hover {
+          background: #0056b3;
+        }
+
+        &:disabled {
+          background: #a0c4ff;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .form-actions {
+    flex-direction: column;
+
+    button {
+      flex: none;
+      width: 100%; /* 🔹 botones ocupan todo el ancho */
+    }
+  }
+}

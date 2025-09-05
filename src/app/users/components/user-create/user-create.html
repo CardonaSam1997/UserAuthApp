@@ -1,0 +1,49 @@
+<div class="form-container">
+  <h2>Crear Usuario</h2>
+
+  <form [formGroup]="createUserForm" (ngSubmit)="onSubmit()">
+    
+    <div>
+      <label>Nombre</label>
+      <input type="text" formControlName="nombre" placeholder="Ingresa tu nombre" />
+      <p *ngIf="createUserForm.get('nombre')?.invalid && createUserForm.get('nombre')?.touched">
+        El nombre es obligatorio (mínimo 3 caracteres).
+      </p>
+    </div>
+
+    <div>
+      <label>Correo</label>
+      <input type="email" formControlName="correo" placeholder="ejemplo@email.com" />
+      <p *ngIf="createUserForm.get('correo')?.invalid && createUserForm.get('correo')?.touched">
+        Ingresa un correo válido.
+      </p>
+    </div>
+    
+    <div>
+      <label>Rol</label>
+      <select formControlName="rol">
+        <option value="">Seleccione un rol</option>
+        <option>Administrador</option>        
+        <option>Usuario</option>
+      </select>
+      <p *ngIf="createUserForm.get('rol')?.invalid && createUserForm.get('rol')?.touched">
+        El rol es obligatorio.
+      </p>
+    </div>
+
+    <div>
+      <label>Contraseña</label>
+      <input type="password" formControlName="password" placeholder="Ingrese nueva contraseña" />
+      <p *ngIf="createUserForm.get('password')?.invalid && createUserForm.get('password')?.touched">
+        La contraseña debe tener al menos 6 caracteres.
+      </p>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="cancel" (click)="cancelar()">Cancelar</button>
+      <button type="submit" class="submit" [disabled]="createUserForm.invalid">
+        Crear
+      </button>
+    </div>
+  </form>
+</div>
