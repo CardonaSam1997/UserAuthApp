@@ -1,14 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth';
-import { LoginRequest } from '@models/auth-models';
+import { AuthResponse, LoginRequest } from '@models/auth-models';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
@@ -24,7 +24,11 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {    }
+
+  registro() {
+    this.router.navigate(['/register']);
+  }
 
   onSubmit(): void {
     if (!this.loginData.email || !this.loginData.password) {
@@ -32,16 +36,24 @@ export class LoginComponent {
       return;
     }
 
-    this.isLoading.set(true);
+    this.isLoading.set(false);
     this.errorMessage.set(null);
 
     this.authService.login(this.loginData).subscribe({
-      next: () => {
-        this.router.navigate(['/users']);
-      },
-      error: (error) => {
+      next: (res) => {
+  console.log("✅ Respuesta login:", res);
+
+  if (res?.token) {
+    this.authService.setSession(res);
+    this.router.navigate(['/users']);
+  } else {
+    this.errorMessage.set('Credenciales inválidas o respuesta incompleta.');
+  }
+},
+
+      error: (err) => {
+        console.error('❌ Error en login:', err);
         this.errorMessage.set('Error al iniciar sesión. Por favor, intenta de nuevo.');
-        this.isLoading.set(false);
       },
       complete: () => {
         this.isLoading.set(false);

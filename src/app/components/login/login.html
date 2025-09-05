@@ -44,8 +44,6 @@
       >
         @if (!isLoading()) {
           <span>Iniciar Sesión</span>
-        } @else {
-          <span>Cargando...</span>
         }
       </button>
     </form>
@@ -53,7 +51,7 @@
     <div class="login-footer">
       <p>
         ¿No tienes una cuenta?
-        <a routerLink="/register" class="link">Regístrate aquí</a>
+        <a (click)="registro()" class="link">Regístrate aquí</a>
       </p>
     </div>
   </div>

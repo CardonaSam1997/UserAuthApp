@@ -27,7 +27,7 @@ export class UserTable {
 
 
   updateUser(user: any) {
-    alert("usuario actualizado");
+    this.router.navigate([`/users/${user.id}/edit`]);
   }
 
 

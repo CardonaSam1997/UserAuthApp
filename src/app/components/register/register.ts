@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/services/auth';
-import { RegisterRequest } from '@models/auth-models';
+import { AuthResponse, RegisterRequest } from '@models/auth-models';
 
 @Component({
   selector: 'app-register',
@@ -29,6 +29,7 @@ export class RegisterComponent {
   ) {}
 
   onSubmit(): void {
+    
     if (!this.registerData.name || !this.registerData.email ||
         !this.registerData.password || !this.registerData.confirmPassword) {
       this.errorMessage.set('Por favor, completa todos los campos');
@@ -39,7 +40,7 @@ export class RegisterComponent {
       this.errorMessage.set('Las contraseñas no coinciden');
       return;
     }
-
+    
     if (this.registerData.password.length < 6) {
       this.errorMessage.set('La contraseña debe tener al menos 6 caracteres');
       return;
@@ -48,11 +49,15 @@ export class RegisterComponent {
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
+    
     this.authService.register(this.registerData).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard']);
+      next: (response: AuthResponse) => {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        
+        this.router.navigate(['/users']);
       },
-      error: (error) => {
+      error: () => {
         this.errorMessage.set('Error al registrarse. Por favor, intenta de nuevo.');
         this.isLoading.set(false);
       },
@@ -61,4 +66,5 @@ export class RegisterComponent {
       }
     });
   }
+
 }
