@@ -20,13 +20,13 @@ namespace UserAuthenticationApi.Controllers
         }
 
         // 👉 Login
-        [HttpPost("login")]        
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             try
             {
-                var token = await _userService.AuthenticateAsync(request.Email, request.Password);
-                return Ok(new { Token = token });
+                var response = await _userService.AuthenticateAsync(request.Email, request.Password);
+                return Ok(response);
             }
             catch (AppException ex)
             {
@@ -40,12 +40,10 @@ namespace UserAuthenticationApi.Controllers
         {
             try
             {
-                var created = await _userService.RegisterUserAsync(userDto);
+                await _userService.RegisterUserAsync(userDto);
+                var response = await _userService.AuthenticateAsync(userDto.Email, userDto.Password);
 
-                // Genera un token inmediatamente
-                var token = await _userService.AuthenticateAsync(userDto.Email, userDto.Password);
-
-                return Ok(new { user = created, token });
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -53,6 +51,8 @@ namespace UserAuthenticationApi.Controllers
             }
         }
     }
+
+    
 
     public class LoginRequest
     {

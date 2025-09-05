@@ -32,26 +32,35 @@ namespace UserAuthenticationApi.Service.Impl
         public async Task<IEnumerable<User>> GetAllUsersAsync() =>
             await _userRepository.GetAllUsersAsync();
 
-        public async Task<string> AuthenticateAsync(string email, string password)
+        public async Task<AuthResponse> AuthenticateAsync(string email, string password)
         {
             var user = await _userRepository.GetByEmailAsync(email);
             if (user == null) throw new AppException("Credenciales inválidas");
 
-            // Validar password con BCrypt
             if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
                 throw new AppException("Credenciales inválidas");
 
-            return GenerateJwtToken(user);
+            var token = GenerateJwtToken(user);
+
+            return new AuthResponse
+            {
+                Token = token,
+                User = new
+                {
+                    user.Id,
+                    user.Name,
+                    user.Email,
+                    user.Role
+                }
+            };
         }
 
-
-        public async Task<User> RegisterUserAsync(UserDto userDto)
+        public async Task RegisterUserAsync(UserDto userDto)
         {
             var existing = await _userRepository.GetByEmailAsync(userDto.Email);
             if (existing != null)
                 throw new InvalidOperationException("El correo ya está registrado.");
-
-            // Generar hash con BCrypt (ya incluye salt)
+            
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
 
             var user = new User
@@ -65,7 +74,7 @@ namespace UserAuthenticationApi.Service.Impl
                 CreatedAt = DateTime.UtcNow
             };
 
-            return await _userRepository.AddUserAsync(user);
+            await _userRepository.AddUserAsync(user);
         }
 
 
@@ -116,4 +125,11 @@ namespace UserAuthenticationApi.Service.Impl
         }
 
     }
+
+    public class AuthResponse
+    {
+        public string Token { get; set; }
+        public object User { get; set; }        
+    }
+
 }
