@@ -1,12 +1,13 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using BCrypt.Net;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using UserAuthenticationApi.DTO;
+using UserAuthenticationApi.Exceptions;
 using UserAuthenticationApi.Models;
 using UserAuthenticationApi.Repository;
-using UserAuthenticationApi.Exceptions;
-using UserAuthenticationApi.DTO;
-using BCrypt.Net;
 
 namespace UserAuthenticationApi.Service.Impl
 {
@@ -29,8 +30,38 @@ namespace UserAuthenticationApi.Service.Impl
             return user;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync() =>
-            await _userRepository.GetAllUsersAsync();
+        public async Task<PagedResult<UserListDto>> GetAllUsersAsync(string? search, int page, int size)
+        {
+            var query = _userRepository.QueryUsers(); // importante devolver IQueryable
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(u => u.Name.Contains(search) || u.Email.Contains(search));
+            }
+
+            var totalItems = await query.CountAsync();
+
+            var items = await query
+                .OrderBy(u => u.Name)
+                .Skip((page - 1) * size)
+                .Take(size)
+                .Select(u => new UserListDto
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Name = u.Name,
+                    Role = u.Role
+                })
+                .ToListAsync();
+
+            return new PagedResult<UserListDto>
+            {
+                Items = items,
+                TotalItems = totalItems,
+                Page = page,
+                Size = size
+            };
+        }
 
         public async Task<AuthResponse> AuthenticateAsync(string email, string password)
         {

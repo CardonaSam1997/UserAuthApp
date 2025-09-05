@@ -13,6 +13,10 @@ namespace UserAuthenticationApi.Repository.Impl
             _context = context;
         }
 
+        public IQueryable<User> QueryUsers()
+        {
+            return _context.Users.AsNoTracking();
+        }
         public async Task<IEnumerable<User>> GetAllUsersAsync() =>
         await _context.Users.AsNoTracking().ToListAsync();
 

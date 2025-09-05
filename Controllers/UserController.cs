@@ -46,17 +46,17 @@ namespace UserAuthenticationApi.Controllers
             return Ok(user);
         }
 
-    //• GET /api/users?search=&page=&size= (admin)
+      
         [HttpGet]
-        [Authorize(Roles = "admin")]
-
-        public async Task<IActionResult> GetAllUsers()
+        [Authorize(Roles = "admin")]        
+        public async Task<IActionResult> GetAllUsers([FromQuery] string? search, [FromQuery] int page = 1, [FromQuery] int size = 10)
         {
-            var users = await _userService.GetAllUsersAsync();
-            return Ok(users);
+            var result = await _userService.GetAllUsersAsync(search, page, size);
+            return Ok(result);
         }
 
-        
+
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(Guid id, [FromBody] User user)
         {

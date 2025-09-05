@@ -6,7 +6,7 @@ namespace UserAuthenticationApi.Repository
 {
     public interface IUserRepository
     {
-
+        IQueryable<User> QueryUsers();
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User?> FindUserByIdAsync(Guid id);
         Task<User?> GetByEmailAsync(string email);
