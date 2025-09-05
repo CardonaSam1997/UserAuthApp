@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UserAuthenticationApi.DTO;
 using UserAuthenticationApi.Exceptions;
 using UserAuthenticationApi.Models;
 using UserAuthenticationApi.Service;
@@ -20,6 +21,21 @@ namespace UserAuthenticationApi.Controllers
             _userService = userService;
         }
 
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> Register(UserDto userDto)
+        {
+            try
+            {
+                await _userService.RegisterUserAsync(userDto);
+                return Ok(new { message = "Usuario creado con éxito." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
@@ -32,7 +48,8 @@ namespace UserAuthenticationApi.Controllers
 
     //• GET /api/users?search=&page=&size= (admin)
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -59,6 +76,8 @@ namespace UserAuthenticationApi.Controllers
 
         
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
+
         public async Task<IActionResult> DeleteUser(Guid id)
         {
             try

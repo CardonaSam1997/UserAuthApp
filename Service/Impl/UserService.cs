@@ -103,12 +103,12 @@ namespace UserAuthenticationApi.Service.Impl
 
         private string GenerateJwtToken(User user)
         {
-            var claims = new[]
-            {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role)
-        };
+            var claims = new List<Claim>
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+        new Claim(JwtRegisteredClaimNames.Email, user.Email),
+        new Claim(ClaimTypes.Role, string.IsNullOrEmpty(user.Role) ? "user" : user.Role) // 👈 validación
+    };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -123,6 +123,7 @@ namespace UserAuthenticationApi.Service.Impl
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
     }
 
