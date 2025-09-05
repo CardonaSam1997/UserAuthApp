@@ -34,6 +34,12 @@ export class UserService {
     });
   }
 
+  updateUser(id: string, user: User): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}`, user, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     return new HttpHeaders({

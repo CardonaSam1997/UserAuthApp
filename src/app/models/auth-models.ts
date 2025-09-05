@@ -3,7 +3,8 @@ export interface User {
   name: string;
   email: string;
   role: string;
-  password?: String
+  isActive?: boolean;
+  password?: String;
 }
 
 export interface UserProfile{

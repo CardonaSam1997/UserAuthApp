@@ -5,31 +5,37 @@
     
     <div>
       <label>Nombre</label>
-      <input type="text" formControlName="nombre" placeholder="Ingresa tu nombre" />
-      <p *ngIf="editUserForm.get('nombre')?.invalid && editUserForm.get('nombre')?.touched">
+      <input type="text" formControlName="name" placeholder="Ingresa tu nombre" />
+      <p *ngIf="editUserForm.get('name')?.invalid && editUserForm.get('name')?.touched">
         El nombre es obligatorio (mínimo 3 caracteres).
       </p>
     </div>
 
     <div>
       <label>Correo</label>
-      <input type="email" formControlName="correo" placeholder="ejemplo@email.com" />
-      <p *ngIf="editUserForm.get('correo')?.invalid && editUserForm.get('correo')?.touched">
+      <input type="email" formControlName="email" placeholder="ejemplo@email.com" />
+      <p *ngIf="editUserForm.get('email')?.invalid && editUserForm.get('email')?.touched">
         Ingresa un correo válido.
       </p>
     </div>
-    
     <div>
       <label>Rol</label>
-      <select formControlName="rol">
+      <select formControlName="role">
         <option value="">Seleccione un rol</option>
-        <option>Administrador</option>        
-        <option>Usuario</option>
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
       </select>
-      <p *ngIf="editUserForm.get('rol')?.invalid && editUserForm.get('rol')?.touched">
-        El rol es obligatorio.
-      </p>
     </div>
+
+    <div>
+      <label>Estado</label>
+      <select formControlName="estado">
+        <option value="">Seleccione el estado</option>
+        <option>Activo</option>
+        <option>Inactivo</option>
+      </select>
+    </div>
+
 
     <div>
       <label>Contraseña</label>
@@ -41,7 +47,7 @@
 
     <div class="form-actions">
       <button type="button" class="cancel">Cancelar</button>
-      <button type="submit" class="submit" [disabled]="editUserForm.invalid">
+      <button type="submit" class="submit">
         Guardar cambios
       </button>
     </div>
