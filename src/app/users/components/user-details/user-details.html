@@ -10,29 +10,39 @@
 
   <div class="details-grid">
     <div>
+      <label>Id:</label>
+      <p>{{ user?.id }}</p>
+    </div>
+    <div>
       <label>Nombre:</label>
-      <p>{{ user?.nombre }}</p>
+      <p>{{ user?.name }}</p>
     </div>
 
     <div>
       <label>Correo:</label>
-      <p>{{ user?.correo }}</p>
+      <p>{{ user?.email }}</p>
     </div>
 
     <div>
       <label>Rol:</label>
-      <p>{{ user?.rol }}</p>
+      <p>{{ user?.role }}</p>
     </div>
 
     <div>
       <label>Estado:</label>
-      <p>{{ user?.estado ? 'Activo' : 'Inactivo' }}</p>
+      <p>{{ user?.isActive ? 'Activo' : 'Inactivo' }}</p>
     </div>
 
     <div>
-      <label>Fecha de creación:</label>
-      <p>{{ user?.fechaCreacion | date:'dd/MM/yyyy' }}</p>
+      <label>Fecha creación:</label>
+      <p>{{ user?.createdAt | date:'dd/MM/yyyy' }}</p>
     </div>
+
+    <div>
+      <label>Fecha modificacion:</label>
+        <p>{{ user?.updatedAt ? (user?.updatedAt | date:'dd/MM/yyyy') : 'N/A' }}</p>
+    </div>
+    
   </div>
 
   <div class="form-actions">

@@ -6,6 +6,17 @@ export interface User {
   password?: String
 }
 
+export interface UserProfile{
+  id?: string;  
+  name: string;
+  email: string;
+  role: string;  
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt:  Date;
+}
+
+
 export interface PagedResult<T> {
   items: T[];
   totalItems: number;
