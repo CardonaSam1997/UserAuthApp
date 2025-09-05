@@ -27,7 +27,7 @@ export class AuthService {
 
     if (token && user) {
       try {
-        const userObj = JSON.parse(user);
+        const userObj: User = JSON.parse(user);
         this.currentUserSubject.next(userObj);
         this.isAuthenticatedSubject.next(true);
       } catch {
@@ -85,5 +85,11 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return this.isAuthenticatedSubject.value;
+  }
+
+  hasRole(allowedRoles: string[]): boolean {
+    const user = this.getCurrentUser();
+    if (!user) return false;
+    return allowedRoles.includes(user.role);
   }
 }

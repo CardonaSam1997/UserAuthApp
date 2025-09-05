@@ -19,9 +19,7 @@ export class UserService {
     });
   }
 
-  
-
-   getUsers(search: string = '', page: number = 1, size: number = 5): Observable<PagedResult<User>> {
+  getUsers(search: string = '', page: number = 1, size: number = 5): Observable<PagedResult<User>> {
     let params = new HttpParams()
       .set('search', search)
       .set('page', page)
@@ -29,8 +27,7 @@ export class UserService {
 
     return this.http.get<PagedResult<User>>(this.apiUrl, { params,headers: this.getAuthHeaders()});
   }
-
-  // GET /api/users/{id}
+  
   getUserById(id: string): Observable<UserProfile> {
     return this.http.get<UserProfile>(`${this.apiUrl}/${id}`, {
       headers: this.getAuthHeaders()

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { UserStateService } from '../../service/user-state-service';
 import { UserProfile } from '@models/auth-models';
 import { UserService } from '../../service/users';
+import { AuthService } from '@services/auth';
 
 
 @Component({
@@ -15,32 +15,30 @@ import { UserService } from '../../service/users';
   styleUrl: './user-details.scss'
 })
 export class UserDetails {
- user: UserProfile | null = null;
+  user: UserProfile | null = null;
 
   constructor(
     private userState: UserStateService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-  this.userState.selectedUser$.subscribe(user => {
-    if (!user) {
-      console.warn('No hay usuario seleccionado');
-      return;
-    }
-
-    // Llamas al backend usando solo el id
-    if (user.id) {
-      this.userService.getUserById(user.id).subscribe({
-        next: (data) => {
-          this.user = data;
-
-          // Aquí imprimes en consola
-          console.log('Usuario completo:', this.user);
-        },
-        error: () => console.error('No se pudo cargar el detalle del usuario')
-      });
-    }
-  });
-}
+    this.userState.selectedUser$.subscribe(selectedUser => {
+      if (selectedUser && selectedUser.id) {        
+        this.userService.getUserById(selectedUser.id).subscribe({
+          next: data => this.user = data,
+          error: () => console.error('No se pudo cargar el detalle del usuario')
+        });
+      } else {        
+        const currentUser = this.authService.getCurrentUser();
+        if (currentUser && currentUser.id) {
+          this.userService.getUserById(currentUser.id).subscribe({
+            next: data => this.user = data,
+            error: () => console.error('No se pudo cargar los datos del usuario logueado')
+          });
+        }
+      }
+    });
+  }
 }

@@ -6,29 +6,34 @@ import { UserTable } from './users/components/user-table/user-table';
 import { UserCreate } from './users/components/user-create/user-create';
 import { UserDetails } from './users/components/user-details/user-details';
 import { UserUpdate } from './users/components/user-update/user-update';
+import { LoginComponent } from './components/login/login';
+import { roleGuard } from './guards/role-guard';
+import { AccessDenied } from './components/access-denied/access-denied';
+import { RegisterComponent } from './components/register/register'
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', loadComponent: () => import('./components/login/login').then(m => m.LoginComponent) },
-  { path: 'register', loadComponent: () => import('./components/register/register').then(m => m.RegisterComponent) },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent},
   { 
     path: 'users',
-    component: DashboardComponent,   
+    component: DashboardComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', component: UserTable },      
-      { path: 'new', component: UserCreate },
-      { path: 'profile', component: UserDetails },
-      { path: ':id/edit', component: UserUpdate },
+      { path: '', component: UserTable, canActivate: [roleGuard], data: { roles: ['admin'] } },
+      { path: 'new', component: UserCreate, canActivate: [roleGuard], data: { roles: ['admin'] } },
+      { path: 'profile', component: UserDetails, canActivate: [roleGuard], data: { roles: ['user', 'admin'] } },
+      { path: ':id/edit', component: UserUpdate, canActivate: [roleGuard], data: { roles: ['user', 'admin'] } }
     ]
-
   },
+  { path: 'access-denied', component: AccessDenied },
+
   { path: '**', redirectTo: '/login' }
-]; 
+];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-
 export class AppRoutingModule {}
