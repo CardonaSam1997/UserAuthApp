@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '@services/auth';
+import { AuthService } from 'src/app/services/auth';
 import { RegisterRequest } from '@models/auth-models';
 
 @Component({

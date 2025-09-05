@@ -3,58 +3,6 @@
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
-.dashboard-header {
-  background: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h1 {
-    color: #333;
-    font-size: 24px;
-    font-weight: 700;
-    margin: 0;
-  }
-
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    span {
-      color: #666;
-      font-size: 16px;
-    }
-
-    .logout-button {
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
-      }
-    }
-  }
-}
 
 .dashboard-content {
   max-width: 1200px;

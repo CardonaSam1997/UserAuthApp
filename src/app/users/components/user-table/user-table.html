@@ -1,0 +1,29 @@
+<div class="table-container">
+  
+  <div class="table-actions">
+    <a class="create-btn" [routerLink]="['/users/new']">Crear Usuario</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td class="actions">
+          <button class="details" (click)="viewDetailsUser(user)">View</button>
+          <button class="edit" (click)="updateUser(user)">Edit</button>
+          <button class="delete" (click)="deleteUser(user)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,65 +1,12 @@
 <div class="dashboard-container">
-  <div class="dashboard-header">
-    <div class="header-content">
-      <h1>Dashboard</h1>
-      <div class="user-info">
-        <span>Bienvenido, {{ currentUser?.name }}</span>
-        <button (click)="logout()" class="logout-button">
-          Cerrar Sesión
-        </button>
-      </div>
-    </div>
-  </div>
+
+  <app-header 
+    [currentUser]="currentUser" 
+    (logoutEvent)="logout()">
+  </app-header>
 
   <div class="dashboard-content">
-    <div class="welcome-card">
-      <div class="welcome-icon">👋</div>
-      <h2>¡Bienvenido a tu Dashboard!</h2>
-      <p>Has iniciado sesión correctamente como <strong>{{ currentUser?.email }}</strong></p>
-    </div>
-
-    <div class="user-details-card">
-      <h3>Información del Usuario</h3>
-      <div class="user-details">
-        <div class="detail-item">
-          <span class="label">ID:</span>
-          <span class="value">{{ currentUser?.id }}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Nombre:</span>
-          <span class="value">{{ currentUser?.name }}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Email:</span>
-          <span class="value">{{ currentUser?.email }}</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="features-card">
-      <h3>Funcionalidades Disponibles</h3>
-      <div class="features-grid">
-        <div class="feature-item">
-          <div class="feature-icon">🔐</div>
-          <h4>Autenticación</h4>
-          <p>Sistema de login y registro funcional</p>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">🛡️</div>
-          <h4>Protección de Rutas</h4>
-          <p>Guardias de autenticación implementados</p>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">💾</div>
-          <h4>Persistencia</h4>
-          <p>Datos guardados en localStorage</p>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">🎨</div>
-          <h4>Diseño Moderno</h4>
-          <p>Interfaz responsive y atractiva</p>
-        </div>
-      </div>
-    </div>
+    <router-outlet></router-outlet>
   </div>
-</div> 
+
+</div>

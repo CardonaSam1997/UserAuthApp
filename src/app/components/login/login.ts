@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '@services/auth';
+import { AuthService } from 'src/app/services/auth';
 import { LoginRequest } from '@models/auth-models';
 
 @Component({
@@ -37,7 +37,7 @@ export class LoginComponent {
 
     this.authService.login(this.loginData).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/users']);
       },
       error: (error) => {
         this.errorMessage.set('Error al iniciar sesión. Por favor, intenta de nuevo.');

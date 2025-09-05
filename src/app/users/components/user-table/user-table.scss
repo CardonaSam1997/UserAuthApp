@@ -1,0 +1,135 @@
+.table-container {
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; // ✅ hace la tabla responsive en pantallas pequeñas
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  min-width: 600px; // asegura que en desktop se vea bien
+
+  thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+
+    th {
+      padding: 14px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #e1e5e9;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: rgba(102, 126, 234, 0.05);
+      }
+
+      td {
+        padding: 12px 14px;
+        color: #333;
+
+        &:first-child {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+
+  button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.details {
+      background: #667eea;
+      color: white;
+
+      &:hover {
+        background: #5a67d8;
+      }
+    }
+
+    &.edit {
+      background: #ecc94b;
+      color: #333;
+
+      &:hover {
+        background: #d69e2e;
+      }
+    }
+
+    &.delete {
+      background: #e53e3e;
+      color: white;
+
+      &:hover {
+        background: #c53030;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  table {
+    font-size: 14px;
+    min-width: unset;
+  }
+
+  .actions button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+.table-actions {
+  display: flex;  
+  margin-bottom: 10px;
+
+  .create-btn {
+    background-color: #667eea;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #5a67d8;
+    }
+  }
+}
