@@ -1,4 +1,5 @@
 ﻿using BCrypt.Net;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -23,12 +24,23 @@ namespace UserAuthenticationApi.Service.Impl
             _config = config;
         }
 
-        public async Task<User?> FindUserByIdAsync(Guid id)
+        public async Task<UserDetailDto?> FindUserByIdAsync(Guid id)
         {
-            var user = await _userRepository.FindUserByIdAsync(id);      
-            if (user == null) throw new InvalidOperationException("Usuario no encontrado.");
-            return user;
+            return await _userRepository.QueryUsers()
+                .Where(u => u.Id == id)
+                .Select(u => new UserDetailDto
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Name = u.Name,
+                    Role = u.Role,
+                    IsActive = u.IsActive,
+                    CreatedAt = u.CreatedAt,
+                    UpdatedAt = u.UpdatedAt
+                })
+                .FirstOrDefaultAsync();
         }
+
 
         public async Task<PagedResult<UserListDto>> GetAllUsersAsync(string? search, int page, int size)
         {
@@ -114,14 +126,25 @@ namespace UserAuthenticationApi.Service.Impl
             var existing = await _userRepository.FindUserByIdAsync(user.Id);
             if (existing == null)
                 throw new KeyNotFoundException("Usuario no encontrado.");
-            
+
             var emailInUse = await _userRepository.GetByEmailAsync(user.Email);
             if (emailInUse != null && emailInUse.Id != user.Id)
                 throw new InvalidOperationException("El correo ya está en uso por otro usuario.");
 
-            user.UpdatedAt = DateTime.UtcNow;
-            await _userRepository.UpdateUserAsync(user);
+            existing.Name = user.Name;
+            existing.Email = user.Email;
+            existing.Role = user.Role;
+            existing.IsActive = user.IsActive;
+            existing.UpdatedAt = DateTime.UtcNow;
+            
+            if (!string.IsNullOrWhiteSpace(user.PasswordHash))
+            {
+                existing.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
+            }
+
+            await _userRepository.UpdateUserAsync(existing);
         }
+
 
         public async Task DeleteUserAsync(Guid id)
         {

@@ -11,7 +11,7 @@ namespace UserAuthenticationApi.Service
         Task RegisterUserAsync(UserDto userDto);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(Guid id);
-        Task <User?> FindUserByIdAsync(Guid id);
+        Task <UserDetailDto?> FindUserByIdAsync(Guid id);
 
     }
 }
