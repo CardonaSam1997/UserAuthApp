@@ -6,6 +6,7 @@ using UserAuthenticationApi.Models;
 using UserAuthenticationApi.Repository;
 using UserAuthenticationApi.Exceptions;
 using UserAuthenticationApi.DTO;
+using BCrypt.Net;
 
 namespace UserAuthenticationApi.Service.Impl
 {
@@ -34,13 +35,15 @@ namespace UserAuthenticationApi.Service.Impl
         public async Task<string> AuthenticateAsync(string email, string password)
         {
             var user = await _userRepository.GetByEmailAsync(email);
-            if (user == null) throw new AppException("Credenciales invalidas");
+            if (user == null) throw new AppException("Credenciales inválidas");
 
-            // Aquí deberías validar el password con hash + salt
-            if (password != "1234") throw new AppException("Credenciales invalidas");
+            // Validar password con BCrypt
+            if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+                throw new AppException("Credenciales inválidas");
 
             return GenerateJwtToken(user);
-        }       
+        }
+
 
         public async Task<User> RegisterUserAsync(UserDto userDto)
         {
@@ -48,20 +51,23 @@ namespace UserAuthenticationApi.Service.Impl
             if (existing != null)
                 throw new InvalidOperationException("El correo ya está registrado.");
 
-            using var hmac = new System.Security.Cryptography.HMACSHA512();
-            var user = new User{
+            // Generar hash con BCrypt (ya incluye salt)
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+
+            var user = new User
+            {
                 Id = Guid.NewGuid(),
                 Email = userDto.Email,
                 Name = userDto.Name,
                 Role = userDto.Role,
-                PasswordSalt = hmac.Key,
-                PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(userDto.Password)),
+                PasswordHash = passwordHash,
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             };
 
             return await _userRepository.AddUserAsync(user);
         }
+
 
         public async Task UpdateUserAsync(User user)
         {

@@ -24,10 +24,19 @@ namespace UserAuthenticationApi.Repository.Impl
 
         public async Task<User> AddUserAsync(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return user;
+            try
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+                return user;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error al guardar en DB: {ex.Message}");
+                throw;
+            }
         }
+
 
         public async Task UpdateUserAsync(User user)
         {

@@ -20,8 +20,7 @@ namespace UserAuthenticationApi.Controllers
         }
 
         // 👉 Login
-        [HttpPost("login")]
-        [AllowAnonymous]
+        [HttpPost("login")]        
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             try
@@ -36,14 +35,17 @@ namespace UserAuthenticationApi.Controllers
         }
 
         // 👉 Registro de usuario
-        [HttpPost("register")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] UserDto userDto)
+        [HttpPost("register")]        
+        public async Task<IActionResult> Register(UserDto userDto)
         {
             try
             {
                 var created = await _userService.RegisterUserAsync(userDto);
-                return CreatedAtAction(nameof(Register), new { id = created.Id }, created);
+
+                // Genera un token inmediatamente
+                var token = await _userService.AuthenticateAsync(userDto.Email, userDto.Password);
+
+                return Ok(new { user = created, token });
             }
             catch (Exception ex)
             {
