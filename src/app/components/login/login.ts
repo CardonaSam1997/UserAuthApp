@@ -19,7 +19,7 @@ export class LoginComponent {
   };
 
   errorMessage = signal<string | null>(null);
-  isLoading = signal(false);
+  
 
   constructor(
     private authService: AuthService,
@@ -36,7 +36,7 @@ export class LoginComponent {
       return;
     }
 
-    this.isLoading.set(false);
+    
     this.errorMessage.set(null);
 
     this.authService.login(this.loginData).subscribe({
@@ -54,10 +54,7 @@ export class LoginComponent {
       error: (err) => {
         console.error('❌ Error en login:', err);
         this.errorMessage.set('Error al iniciar sesión. Por favor, intenta de nuevo.');
-      },
-      complete: () => {
-        this.isLoading.set(false);
-      }
+      }      
     });
   }
 }

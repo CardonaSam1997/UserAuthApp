@@ -23,8 +23,8 @@
       <label>Rol</label>
       <select formControlName="rol">
         <option value="">Seleccione un rol</option>
-        <option>Administrador</option>        
-        <option>Usuario</option>
+        <option>Admin</option>        
+        <option>User</option>
       </select>
       <p *ngIf="createUserForm.get('rol')?.invalid && createUserForm.get('rol')?.touched">
         El rol es obligatorio.
@@ -41,9 +41,17 @@
 
     <div class="form-actions">
       <button type="button" class="cancel" (click)="cancelar()">Cancelar</button>
-      <button type="submit" class="submit" [disabled]="createUserForm.invalid">
+      <button type="submit" class="submit" >
         Crear
       </button>
     </div>
   </form>
+  
+  <div *ngIf="successMessage()" class="success-message">
+  {{ successMessage() }}
+</div>
+
+<div *ngIf="errorMessage()" class="error-message">
+  {{ errorMessage() }}
+</div>
 </div>

@@ -105,3 +105,21 @@
     }
   }
 }
+
+.success-message {
+  background-color: #d4edda;   
+  border: 1px solid #28a745;   
+  color: #155724;              
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.error-message {
+  background-color: #f8d7da;   
+  border: 1px solid #dc3545;   
+  color: #721c24;              
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
