@@ -1,0 +1,47 @@
+<div class="form-container">
+  <div class="header-actions">
+    <h2>Detalles del Usuario</h2>
+    <button 
+      class="edit-btn" 
+      [routerLink]="['/users', user?.id, 'edit']">
+      Editar
+    </button>
+  </div>
+
+  <div class="details-grid">
+    <div>
+      <label>Id:</label>
+      <p>{{ user?.id }}</p>
+    </div>
+    <div>
+      <label>Nombre:</label>
+      <p>{{ user?.name }}</p>
+    </div>
+
+    <div>
+      <label>Correo:</label>
+      <p>{{ user?.email }}</p>
+    </div>
+
+    <div>
+      <label>Rol:</label>
+      <p>{{ user?.role }}</p>
+    </div>
+
+    <div>
+      <label>Estado:</label>
+      <p>{{ user?.isActive ? 'Activo' : 'Inactivo' }}</p>
+    </div>
+
+    <div>
+      <label>Fecha creación:</label>
+      <p>{{ user?.createdAt | date:'dd/MM/yyyy' }}</p>
+    </div>
+
+    <div>
+      <label>Fecha modificacion:</label>
+        <p>{{ user?.updatedAt ? (user?.updatedAt | date:'dd/MM/yyyy') : 'N/A' }}</p>
+    </div>
+    
+  </div>  
+</div>

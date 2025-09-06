@@ -1,0 +1,55 @@
+<div class="form-container">
+  <h2>Editar Usuario</h2>
+
+  <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+    
+    <div>
+      <label>Nombre</label>
+      <input type="text" formControlName="name" placeholder="Ingresa tu nombre" />
+      <p *ngIf="editUserForm.get('name')?.invalid && editUserForm.get('name')?.touched">
+        El nombre es obligatorio (mínimo 3 caracteres).
+      </p>
+    </div>
+
+    <div>
+      <label>Correo</label>
+      <input type="email" formControlName="email" placeholder="ejemplo@email.com" />
+      <p *ngIf="editUserForm.get('email')?.invalid && editUserForm.get('email')?.touched">
+        Ingresa un correo válido.
+      </p>
+    </div>
+    <div>
+      <label>Rol</label>
+      <select formControlName="role">
+        <option value="">Seleccione un rol</option>
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Estado</label>
+      <select formControlName="estado">
+        <option value="">Seleccione el estado</option>
+        <option>Activo</option>
+        <option>Inactivo</option>
+      </select>
+    </div>
+
+
+    <div>
+      <label>Contraseña</label>
+      <input type="password" formControlName="password" placeholder="Ingrese nueva contraseña" />
+      <p *ngIf="editUserForm.get('password')?.invalid && editUserForm.get('password')?.touched">
+        La contraseña debe tener al menos 6 caracteres.
+      </p>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="cancel">Cancelar</button>
+      <button type="submit" class="submit">
+        Guardar cambios
+      </button>
+    </div>
+  </form>
+</div>
