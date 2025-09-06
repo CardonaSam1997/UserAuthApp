@@ -13,11 +13,17 @@ Un sistema completo de login y registro desarrollado en Angular
 - Node.js (versión 18 o superior)
 - Angular 20.2.2
 
+## Conexion al backend
+Para probar todas las vistas de Angular, el Api debe estar corriendo y la URL definida en environment.ts debe estar disponible
+
+Si cambias el puerto del backend cambialo en **src/environments/environment.ts**
+- apiUrl: 'http://localhost:5117/api'
+
 ## 🛠️ Instalación
 
 1. **Clonar el repositorio**:
 ```
-git clone 
+git clone https://github.com/CardonaSam1997/UserAuthenticationAngular.git
 ```
 
 2. **Instalar dependencias**:
@@ -35,18 +41,7 @@ ng serve
 http://localhost:4200
 ```
 
-## 🚀 Despliegue
-
-Para desplegar en producción:
-
-```bash
-  ng build --configuration production
-```
 
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT.
-
-## 🆘 Soporte
-
-Si tienes alguna pregunta o problema, por favor abre un issue en el repositorio.
