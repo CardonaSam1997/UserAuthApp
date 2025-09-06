@@ -45,8 +45,7 @@ export class UserUpdate implements OnInit {
             name: user.name,
             email: user.email,
             role: user.role,
-            estado: user.isActive ? 'Activo' : 'Inactivo',
-            
+            estado: user.isActive ? 'Activo' : 'Inactivo',            
           });
         },
         error: (err) => console.error('Error al cargar usuario:', err)
@@ -54,47 +53,47 @@ export class UserUpdate implements OnInit {
     }
   }
 
-onSubmit(): void {
-  if (this.editUserForm.valid) {
-    const userId = this.route.snapshot.paramMap.get('id');
-    if (userId) {
-      const formValue = this.editUserForm.value;
+  onSubmit(): void {
+    if (this.editUserForm.valid) {
+      const userId = this.route.snapshot.paramMap.get('id');
+      if (userId) {
+        const formValue = this.editUserForm.value;
+        
+        const payload: any = {
+          id: userId,
+          name: formValue.name,
+          email: formValue.email,
+          role: formValue.role?.toLowerCase(), // <-- convertimos a minúscula
+          isActive: formValue.estado === 'Activo'
+        };
 
-      // Construir payload
-      const payload: any = {
-        id: userId,
-        name: formValue.name,
-        email: formValue.email,
-        role: formValue.role,
-        isActive: formValue.estado === 'Activo' // convertir a boolean
-      };
-
-      if (formValue.password && formValue.password.length >= 6) {
-        payload.passwordHash = formValue.password; // ⚠ coincide con el modelo backend
-      }
-
-      this.usersService.updateUser(userId, payload).subscribe({
-        next: () => {
-          console.log('Usuario actualizado correctamente');
-
-          // Redirigir según rol del usuario logueado
-          const currentUser = this.authService.getCurrentUser();
-          if (currentUser?.role === 'admin') {
-            this.router.navigate(['/users']); 
-          } else if (currentUser?.role === 'user') {
-            this.router.navigate(['/users/profile']);
-          } else {
-            this.router.navigate(['/login']); 
-          }
-        },
-        error: (err) => {
-          console.error('Error al actualizar usuario:', err);
+        if (formValue.password && formValue.password.length >= 6) {
+          payload.passwordHash = formValue.password;
         }
-      });
+
+        this.usersService.updateUser(userId, payload).subscribe({
+          next: () => {
+            console.log('Usuario actualizado correctamente');
+
+            const currentUser = this.authService.getCurrentUser();
+            const currentRole = currentUser?.role?.toLowerCase(); // <-- normalizamos
+            
+            if (currentRole === 'admin') {
+              this.router.navigate(['/users']); 
+            } else if (currentRole === 'user') {
+              this.router.navigate(['/users/profile']);
+            } else {
+              this.router.navigate(['/login']); 
+            }
+          },
+          error: (err) => {
+            console.error('Error al actualizar usuario:', err);
+          }
+        });
+      }
+    } else {
+      this.editUserForm.markAllAsTouched();
     }
-  } else {
-    this.editUserForm.markAllAsTouched();
   }
-}
 
 }

@@ -35,7 +35,8 @@ export class LoginComponent {
         if (res?.token && res.user) {
           this.authService.setSession(res);
           
-          const role = res.user.role;
+          const role = res.user.role?.toLowerCase();
+
           if (role === 'admin') {
             this.router.navigate(['/users']);
           } else if (role === 'user') {

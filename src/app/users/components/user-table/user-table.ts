@@ -22,10 +22,18 @@ export class UserTable implements OnInit {
   page: number = 1;
   size: number = 5;
   total: number = 0;
-
+  
+  currentUserId: string | null = null;
+  
   constructor(private router: Router, private userService: UserService, private userState: UserStateService) {}
 
   ngOnInit() {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const user = JSON.parse(userData);
+      this.currentUserId = user.id;
+    }
+
     this.loadUsers();
   }
 

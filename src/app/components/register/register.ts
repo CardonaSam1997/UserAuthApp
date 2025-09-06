@@ -17,7 +17,8 @@ export class RegisterComponent {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: ''
   };
 
   errorMessage = signal<string | null>(null);

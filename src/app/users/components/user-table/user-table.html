@@ -30,8 +30,12 @@
         <td>{{ user.email }}</td>
         <td class="actions">
           <button class="details" (click)="viewDetailsUser(user)">View</button>
-          <button class="edit" (click)="updateUser(user)">Edit</button>
-          <button class="delete" (click)="confirmDelete(user)">Delete</button>
+          <button class="edit" (click)="updateUser(user)">Edit</button>         
+          <button class="delete"
+            (click)="confirmDelete(user)" 
+            [disabled]="user.id === currentUserId">
+            delete
+          </button>
         </td>
       </tr>
     </tbody>
