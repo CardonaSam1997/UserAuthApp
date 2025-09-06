@@ -19,7 +19,7 @@ namespace UserAuthenticationApi.Controllers
             _userService = userService;
         }
 
-        // 👉 Login
+        
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
@@ -34,7 +34,7 @@ namespace UserAuthenticationApi.Controllers
             }
         }
 
-        // 👉 Registro de usuario
+        
         [HttpPost("register")]        
         public async Task<IActionResult> Register(UserDto userDto)
         {
