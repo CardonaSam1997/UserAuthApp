@@ -1,0 +1,43 @@
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.error-box {
+  text-align: center;
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+}
+
+.error-box h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.error-box p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.error-box button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.error-box button:hover {
+  background-color: #0056b3;
+}

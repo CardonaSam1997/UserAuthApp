@@ -4,12 +4,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthResponse, LoginRequest, RegisterRequest, User } from '../models/auth-models';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:44324/api/Auth';
+  private apiUrl = 'https://localhost:7099/api/Auth';
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
@@ -26,12 +29,16 @@ export class AuthService {
     const user = localStorage.getItem('user');
 
     if (token && user) {
-      try {
-        const userObj: User = JSON.parse(user);
-        this.currentUserSubject.next(userObj);
-        this.isAuthenticatedSubject.next(true);
-      } catch {
-        this.clearStoredData();
+      if (this.isTokenExpired(token)) {
+        this.logout();
+      } else {
+        try {
+          const userObj: User = JSON.parse(user);
+          this.currentUserSubject.next(userObj);
+          this.isAuthenticatedSubject.next(true);
+        } catch {
+          this.clearStoredData();
+        }
       }
     }
   }
@@ -76,7 +83,12 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (token && this.isTokenExpired(token)) {
+      this.logout();
+      return null;
+    }
+    return token;
   }
 
   getCurrentUser(): User | null {
@@ -84,12 +96,31 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.isAuthenticatedSubject.value;
+    const token = this.getToken();
+    return !!token && this.isAuthenticatedSubject.value;
   }
 
   hasRole(allowedRoles: string[]): boolean {
     const user = this.getCurrentUser();
     if (!user) return false;
     return allowedRoles.includes(user.role);
+  }
+
+  isTokenExpired(token: string): boolean {
+    try {
+      const decoded: any = jwtDecode(token);
+      if (!decoded.exp) return true;
+      const now = Math.floor(Date.now() / 1000);
+      return now > decoded.exp;
+    } catch {
+      return true;
+    }
+  }
+
+  public checkToken(): void {    
+    const token = this.getToken();
+    if (!token) {
+      this.logout();
+    }
   }
 }

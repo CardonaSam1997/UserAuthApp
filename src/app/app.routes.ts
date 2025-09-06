@@ -10,6 +10,7 @@ import { LoginComponent } from './components/login/login';
 import { roleGuard } from './guards/role-guard';
 import { AccessDenied } from './components/access-denied/access-denied';
 import { RegisterComponent } from './components/register/register'
+import { ErrorComponent } from './components/pages/error/error';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -27,6 +28,8 @@ export const routes: Routes = [
     ]
   },
   { path: 'access-denied', component: AccessDenied },
+  { path: 'error', component: ErrorComponent  },
+
 
   { path: '**', redirectTo: '/login' }
 ];

@@ -8,7 +8,7 @@ import { PagedResult, User, UserProfile } from '@models/auth-models';
 })
 export class UserService {
 
-  private apiUrl = 'https://localhost:44324/api/users'; 
+  private apiUrl = 'https://localhost:7099/api/users'; 
 
   constructor(private http: HttpClient) {}
 
