@@ -31,7 +31,7 @@
         <td class="actions">
           <button class="details" (click)="viewDetailsUser(user)">View</button>
           <button class="edit" (click)="updateUser(user)">Edit</button>
-          <button class="delete" (click)="deleteUser(user)">Delete</button>
+          <button class="delete" (click)="confirmDelete(user)">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -41,5 +41,14 @@
     <button (click)="changePage(page - 1)" [disabled]="page === 1">Anterior</button>
     <span>Página {{ page }}</span>
     <button (click)="changePage(page + 1)" [disabled]="users.length < size">Siguiente</button>
+  </div>
+</div>
+
+
+<div class="modal" *ngIf="userToDelete">
+  <div class="modal-content">
+    <p>¿Estás seguro que quieres eliminar al usuario <strong>{{ userToDelete.name }}</strong>?</p>
+    <button (click)="deleteConfirmed()">Sí</button>
+    <button (click)="cancelDelete()">Cancelar</button>
   </div>
 </div>

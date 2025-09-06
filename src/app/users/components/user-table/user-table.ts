@@ -16,6 +16,8 @@ import { UserStateService } from '../../service/user-state-service';
 })
 export class UserTable implements OnInit {
   users: User[] = [];
+  userToDelete: User | null = null;
+
   searchTerm: string = '';
   page: number = 1;
   size: number = 5;
@@ -58,7 +60,31 @@ export class UserTable implements OnInit {
     this.router.navigate([`/users/${user.id}/edit`]);
   }
 
-  deleteUser(user: User) {
-    alert(`Eliminar usuario ${user.name}`);
+  confirmDelete(user: User) {
+    this.userToDelete = user;
+  }
+
+  cancelDelete() {
+    this.userToDelete = null;
+  }
+
+  deleteConfirmed() {
+  if (!this.userToDelete) return;
+
+  const id = this.userToDelete.id;
+  if (!id) return;
+
+  this.userService.deleteUser(id).subscribe({
+    next: () => {      
+      this.userToDelete = null;      
+      this.loadUsers();
+    },
+    error: (err) => {
+      console.error('Error eliminando usuario', err);
+      this.userToDelete = null;
+    }
+  });
+
+  
   }
 }

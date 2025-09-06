@@ -207,3 +207,64 @@ table {
   font-weight: 500;
   color: #333;
 }
+
+/*Modal*/
+/* Fondo semi-transparente */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenido de la modal */
+.modal-content {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.3);
+}
+
+/* Texto */
+.modal-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+/* Botones */
+.modal-content button {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* Botón de confirmar */
+.modal-content button:first-of-type {
+  background-color: #dc3545; /* rojo bootstrap */
+  color: #fff;
+}
+.modal-content button:first-of-type:hover {
+  background-color: #c82333;
+}
+
+/* Botón de cancelar */
+.modal-content button:last-of-type {
+  background-color: #6c757d; /* gris bootstrap */
+  color: #fff;
+}
+.modal-content button:last-of-type:hover {
+  background-color: #5a6268;
+}
