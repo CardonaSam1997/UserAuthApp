@@ -11,7 +11,7 @@ Un sistema completo de login y registro desarrollado en Angular
 ## 📋 Requisitos Previos
 
 - Node.js (versión 18 o superior)
-- npm o yarn
+- Angular 20.2.2
 
 ## 🛠️ Instalación
 
