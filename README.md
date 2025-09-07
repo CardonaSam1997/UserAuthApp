@@ -5,7 +5,7 @@
 Antes de ejecutar la API, importar la base de datos que esta en el script que se encuentra
 dentro de la carpeta **ScriptsDB** en el proyecto llamado `UserAuthDb.bacpac`
 
-- Pasos para importar el archivo .bacpac en SQL Server Management Studio (SSMS):
+- Pasos para importar el archivo .bacpac en SQL Server Management Studio (SSMS):*
   1. Abre SQL Server Management Studio (SSMS) y conéctate a tu instancia de SQL Server.
   2. Haz clic derecho en la carpeta "Bases de datos" en el Explorador de objetos.
   3. Selecciona "Importar la aplicación de capa de datos".
